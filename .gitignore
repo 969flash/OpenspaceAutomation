@@ -172,3 +172,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+#rhino Temp File
+*.rhl
+*.3dmbak
