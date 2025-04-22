@@ -109,7 +109,9 @@ class OepnspaceGenerator:
         sorted_candidates = self.sort_candidate_regions(filtered_candidates)
 
         # 4. 후보 지역 조정(축소)
-        return self.adjust_candidate_regions(sorted_candidates)
+        openspace_regions = self.adjust_candidate_regions(sorted_candidates)
+
+        return openspace_regions
 
     def get_candidate_regions(self) -> List[geo.Curve]:
         """공개공지 최소 조건을 만족하는 영역 생성"""
@@ -209,6 +211,8 @@ class OepnspaceGenerator:
         return adjusted_candidates
 
 
+####### 인풋 데이터 예시 #######
+# 대지, 도로, 건물, 주차장 영역을 정의합니다.
 lot = Lot(lot_region, "일반주거지역")  # type: geo.Curve
 roads = [Road(region) for region in road_regions]  # type: List[Road]
 building = Building(building_regions, 5, "업무시설")  # Placeholder for building
@@ -216,6 +220,8 @@ requirement = OpenspaceRequirement(lot, building)  # Placeholder for requirement
 openspace_generator = OepnspaceGenerator(
     lot, roads, building, parking_region, requirement
 )  # type: OepnspaceGenerator
+##############################
+
 
 openspace_regions = openspace_generator.get_openspace()
 
@@ -224,4 +230,4 @@ openspace_area = sum(
 )
 print(f"Total Openspace Area: {openspace_area} m2")
 print(f"Lot Area: {lot.area} m2")
-print(f"Building Area: {building.floor_area} m2")
+print(f"Building Area: {building.total_area} m2")
